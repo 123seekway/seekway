@@ -17,6 +17,7 @@
 public class MapperProxyFactory<T> {
 
     private final Class<T> mapperInterface;
+
     //无参构造，只要调用它就可以实现注入
     public MapperProxyFactory(Class<T> mapperInterface) {
         this.mapperInterface = mapperInterface;

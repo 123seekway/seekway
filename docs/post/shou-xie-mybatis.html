@@ -114,6 +114,7 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <div class="highlight highlight-source-java"><pre class="notranslate"><span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-smi">MapperProxyFactory</span>&lt;<span class="pl-smi">T</span>&gt; {
 
     <span class="pl-k">private</span> <span class="pl-k">final</span> <span class="pl-smi">Class</span>&lt;<span class="pl-smi">T</span>&gt; <span class="pl-s1">mapperInterface</span>;
+
     <span class="pl-c">//无参构造，只要调用它就可以实现注入</span>
     <span class="pl-k">public</span> <span class="pl-smi">MapperProxyFactory</span>(<span class="pl-smi">Class</span>&lt;<span class="pl-smi">T</span>&gt; <span class="pl-s1">mapperInterface</span>) {
         <span class="pl-smi">this</span>.<span class="pl-s1">mapperInterface</span> = <span class="pl-s1">mapperInterface</span>;
