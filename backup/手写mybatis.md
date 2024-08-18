@@ -23,7 +23,8 @@ public class MapperProxyFactory<T> {
         this.mapperInterface = mapperInterface;
     }
 ```
-2. 要启动代理对象，一是接口类加载器，二是class数组，三是接口和方法的构造器对象
+2. 要启动代理对象，一是接口类加载器，二是class数组[接口]，三是接口和方法的构造器对象，且类要实现InvocationHandler, Serializable，这里单独创建个类实现。返回值为接口本身，调用方法时即被代理。
 ``` java
 (T) Proxy.newProxyInstance(接口类加载器，class数组，接口和方法)
 ```
+3. invoke(方法，形参)，

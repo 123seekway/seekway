@@ -120,9 +120,12 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
         <span class="pl-smi">this</span>.<span class="pl-s1">mapperInterface</span> = <span class="pl-s1">mapperInterface</span>;
     }</pre></div>
 <ol start="2">
-<li>要启动代理对象，一是接口类加载器，二是class数组，三是接口和方法的构造器对象</li>
+<li>要启动代理对象，一是接口类加载器，二是class数组[接口]，三是接口和方法的构造器对象，且类要实现InvocationHandler, Serializable，这里单独创建个类实现。返回值为接口本身，调用方法时即被代理。</li>
 </ol>
-<div class="highlight highlight-source-java"><pre class="notranslate">(<span class="pl-smi">T</span>) <span class="pl-smi">Proxy</span>.<span class="pl-en">newProxyInstance</span>(接口类加载器，<span class="pl-k">class</span>数组，接口和方法)</pre></div></div>
+<div class="highlight highlight-source-java"><pre class="notranslate">(<span class="pl-smi">T</span>) <span class="pl-smi">Proxy</span>.<span class="pl-en">newProxyInstance</span>(接口类加载器，<span class="pl-k">class</span>数组，接口和方法)</pre></div>
+<ol start="3">
+<li>invoke(方法，形参)，</li>
+</ol></div>
 <div style="font-size:small;margin-top:8px;float:right;"></div>
 
 <button class="btn btn-block" type="button" onclick="openComments()" id="cmButton">评论</button>
