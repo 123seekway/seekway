@@ -48,4 +48,6 @@ public class MapperProxy<T> implements InvocationHandler, Serializable {
 扫描操作：包下有类和接口，做分类处理
 这节设计巧妙的地方，用扫描出的类去调用另一个实现类，再调其方法。
 有趣的发现：接口可以作为其实现类值的停靠站。
+线路一：接口注入，使用了注册映射器代理工厂，从包扫描到的接口。
+问题-：好好的为何要实现SqlSession，主要是提供一个接口，调用方便。
 
