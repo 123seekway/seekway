@@ -106,10 +106,15 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <ol>
 <li>尝鲜代理invoke(方法，形参)</li>
 <li>熟悉工厂模式的调用。</li>
+<li>启发式学习，以目的性为主的实现</li>
 </ol>
-<p>实现：</p>
+<p>目的：为代理方法提供物料——接口和实现类，使其调用接口时被代理对象接管，能更好的管理和使用。</p>
 <ol>
-<li>创建代理工厂，目的是实现调用注入，为要实现的代理对象方法提供物料，这里为接口.class，IUserDao.class。</li>
+<li>要启动代理对象，一是接口类加载器，二是class数组[接口]，三是接口和方法的构造器对象，且类要实现InvocationHandler, Serializable，这里单独创建个类实现。返回值为接口本身，调用方法时即被代理。</li>
+</ol>
+<div class="highlight highlight-source-java"><pre class="notranslate">(<span class="pl-smi">T</span>) <span class="pl-smi">Proxy</span>.<span class="pl-en">newProxyInstance</span>(接口类加载器，<span class="pl-k">class</span>数组，接口和方法)</pre></div>
+<ol start="2">
+<li>创建代理工厂，把需要的接口对象注入无参构造器。</li>
 </ol>
 <div class="highlight highlight-source-java"><pre class="notranslate"><span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-smi">MapperProxyFactory</span>&lt;<span class="pl-smi">T</span>&gt; {
 
@@ -119,14 +124,25 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
     <span class="pl-k">public</span> <span class="pl-smi">MapperProxyFactory</span>(<span class="pl-smi">Class</span>&lt;<span class="pl-smi">T</span>&gt; <span class="pl-s1">mapperInterface</span>) {
         <span class="pl-smi">this</span>.<span class="pl-s1">mapperInterface</span> = <span class="pl-s1">mapperInterface</span>;
     }</pre></div>
-<ol start="2">
-<li>要启动代理对象，一是接口类加载器，二是class数组[接口]，三是接口和方法的构造器对象，且类要实现InvocationHandler, Serializable，这里单独创建个类实现。返回值为接口本身，调用方法时即被代理。</li>
-</ol>
-<div class="highlight highlight-source-java"><pre class="notranslate">(<span class="pl-smi">T</span>) <span class="pl-smi">Proxy</span>.<span class="pl-en">newProxyInstance</span>(接口类加载器，<span class="pl-k">class</span>数组，接口和方法)</pre></div>
 <ol start="3">
+<li>代理类的第三个形参为需继承InvocationHandler的类，创建此类且利用构造方法注入。</li>
+</ol>
+<div class="highlight highlight-source-java"><pre class="notranslate"><span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-smi">MapperProxy</span>&lt;<span class="pl-smi">T</span>&gt; <span class="pl-k">implements</span> <span class="pl-smi">InvocationHandler</span>, <span class="pl-smi">Serializable</span> {
+
+    <span class="pl-c">//Map&lt;"cn.bugstack.mybatis.test.dao.IUserDao.queryUserName", "模拟执行，查询用户姓名"&gt;</span>
+    <span class="pl-k">private</span> <span class="pl-smi">Map</span>&lt;<span class="pl-smi">String</span>, <span class="pl-smi">String</span>&gt; <span class="pl-s1">sqlSession</span>;
+    <span class="pl-c">//接口对象</span>
+    <span class="pl-k">private</span> <span class="pl-k">final</span> <span class="pl-smi">Class</span>&lt;<span class="pl-smi">T</span>&gt; <span class="pl-s1">mapperInterface</span>;
+    <span class="pl-c">//构造器</span>
+    <span class="pl-k">public</span> <span class="pl-smi">MapperProxy</span>(<span class="pl-smi">Map</span>&lt;<span class="pl-smi">String</span>, <span class="pl-smi">String</span>&gt; <span class="pl-s1">sqlSession</span>, <span class="pl-smi">Class</span>&lt;<span class="pl-smi">T</span>&gt; <span class="pl-s1">mapperInterface</span>) {
+        <span class="pl-smi">this</span>.<span class="pl-s1">sqlSession</span> = <span class="pl-s1">sqlSession</span>;
+        <span class="pl-smi">this</span>.<span class="pl-s1">mapperInterface</span> = <span class="pl-s1">mapperInterface</span>;
+    }</pre></div>
+<ol start="5">
 <li>invoke(方法，形参)，</li>
 </ol>
-<p>东西太多，后面打算采用一问一答简略的方式来写</p></div>
+<p>东西太多，后面打算采用一问一答简略的方式来写</p>
+<h3>第三章 实现映射器的注册和使用</h3></div>
 <div style="font-size:small;margin-top:8px;float:right;"></div>
 
 <button class="btn btn-block" type="button" onclick="openComments()" id="cmButton">评论</button>
