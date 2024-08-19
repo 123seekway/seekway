@@ -44,6 +44,7 @@ public class MapperProxy<T> implements InvocationHandler, Serializable {
 ```
 5. invoke(方法，形参)
 ### 第三章 实现映射器的注册和使用
-
-
+目的：把包下的类扫描放到map中
+扫描操作：包下有类和接口，做分类处理
+这节设计巧妙的地方，用扫描出的类去调用另一个实现类，再调其方法
 
