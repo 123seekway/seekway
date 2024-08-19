@@ -52,3 +52,4 @@ public class MapperProxy<T> implements InvocationHandler, Serializable {
 问题-：好好的为何要实现SqlSession，主要是提供一个接口，调用方便。
 接口要有对应的实现类。
 关键还是看接口。
+可以拿到方法与形参，然后随意自定义。
