@@ -42,9 +42,7 @@ public class MapperProxy<T> implements InvocationHandler, Serializable {
         this.mapperInterface = mapperInterface;
     }
 ```
-5. invoke(方法，形参)，
-
-东西太多，后面打算采用一问一答简略的方式来写
+5. invoke(方法，形参)
 ### 第三章 实现映射器的注册和使用
 
 
