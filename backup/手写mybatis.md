@@ -53,3 +53,6 @@ public class MapperProxy<T> implements InvocationHandler, Serializable {
 接口要有对应的实现类。
 关键还是看接口。
 1.注入接口 2.方法调用时即被代理，包括形参，后面为自定义
+SqlSessionFactory接口业务流程为
+生产：
+class可以强转成接口
