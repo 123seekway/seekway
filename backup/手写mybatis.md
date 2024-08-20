@@ -12,35 +12,20 @@
 2. 熟悉工厂模式的调用。
 3. 启发式学习，以目的性为主的实现
 
-目的：为代理方法提供物料——接口和实现类，使其调用接口时被代理对象接管，能更好的管理和使用。
+目的：为代理方法提供物料——接口和被代理后的类，使其在接口调用时被代理对象接管，能更好的管理和使用。
 1. 要启动代理对象，一是接口类加载器，二是class数组[接口]，三是最终执行invoke且继承InvocationHandler的方法，就是路标的作用。
 ``` java
 (T) Proxy.newProxyInstance(接口类加载器，class数组，路标对象)
 ```
 2. 创建代理工厂，把需要的接口对象注入无参构造器。
 ``` java
-public class MapperProxyFactory<T> {
-
-    private final Class<T> mapperInterface;
-
     //无参构造，只要调用它就可以实现注入
     public MapperProxyFactory(Class<T> mapperInterface) {
         this.mapperInterface = mapperInterface;
-    }
 ```
-3. 代理类的第三个形参为路标的作用！！给代理方法找路用的，就是要知道到底被哪个类使用了，继承InvocationHandler的类，创建此类且利用构造方法注入。
+3. 代理类的第三个形参为路标的作用！！给代理方法找路用的，就是要知道到底被哪个类使用了，继承InvocationHandler的类
 ``` java
-public class MapperProxy<T> implements InvocationHandler, Serializable {
-
-    //Map<"cn.bugstack.mybatis.test.dao.IUserDao.queryUserName", "模拟执行，查询用户姓名">
-    private Map<String, String> sqlSession;
-    //接口对象
-    private final Class<T> mapperInterface;
-    //构造器
-    public MapperProxy(Map<String, String> sqlSession, Class<T> mapperInterface) {
-        this.sqlSession = sqlSession;
-        this.mapperInterface = mapperInterface;
-    }
+final MapperProxy<T> mapperProxy = new MapperProxy<>(sqlSession, mapperInterface, methodCache);
 ```
 5. invoke(方法，形参)
 ### 第三章 实现映射器的注册和使用
