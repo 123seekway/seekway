@@ -13,9 +13,9 @@
 3. 启发式学习，以目的性为主的实现
 
 目的：为代理方法提供物料——接口和实现类，使其调用接口时被代理对象接管，能更好的管理和使用。
-1. 要启动代理对象，一是接口类加载器，二是class数组[接口]，三是接口和方法的构造器对象，且类要实现InvocationHandler, Serializable，这里单独创建个类实现。返回值为接口本身，调用方法时即被代理。
+1. 要启动代理对象，一是接口类加载器，二是class数组[接口]，三是最终执行invoke且继承InvocationHandler的方法，就是路标的作用。
 ``` java
-(T) Proxy.newProxyInstance(接口类加载器，class数组，接口和方法)
+(T) Proxy.newProxyInstance(接口类加载器，class数组，路标对象)
 ```
 2. 创建代理工厂，把需要的接口对象注入无参构造器。
 ``` java
@@ -28,7 +28,7 @@ public class MapperProxyFactory<T> {
         this.mapperInterface = mapperInterface;
     }
 ```
-3. 代理类的第三个形参为需继承InvocationHandler的类，创建此类且利用构造方法注入。
+3. 代理类的第三个形参为路标的作用！！给代理方法找路用的，就是要知道到底被哪个类使用了，继承InvocationHandler的类，创建此类且利用构造方法注入。
 ``` java
 public class MapperProxy<T> implements InvocationHandler, Serializable {
 

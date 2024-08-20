@@ -110,9 +110,9 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 </ol>
 <p>目的：为代理方法提供物料——接口和实现类，使其调用接口时被代理对象接管，能更好的管理和使用。</p>
 <ol>
-<li>要启动代理对象，一是接口类加载器，二是class数组[接口]，三是接口和方法的构造器对象，且类要实现InvocationHandler, Serializable，这里单独创建个类实现。返回值为接口本身，调用方法时即被代理。</li>
+<li>要启动代理对象，一是接口类加载器，二是class数组[接口]，三是最终执行invoke且继承InvocationHandler的方法，就是路标的作用。</li>
 </ol>
-<div class="highlight highlight-source-java"><pre class="notranslate">(<span class="pl-smi">T</span>) <span class="pl-smi">Proxy</span>.<span class="pl-en">newProxyInstance</span>(接口类加载器，<span class="pl-k">class</span>数组，接口和方法)</pre></div>
+<div class="highlight highlight-source-java"><pre class="notranslate">(<span class="pl-smi">T</span>) <span class="pl-smi">Proxy</span>.<span class="pl-en">newProxyInstance</span>(接口类加载器，<span class="pl-k">class</span>数组，路标对象)</pre></div>
 <ol start="2">
 <li>创建代理工厂，把需要的接口对象注入无参构造器。</li>
 </ol>
@@ -125,7 +125,7 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
         <span class="pl-smi">this</span>.<span class="pl-s1">mapperInterface</span> = <span class="pl-s1">mapperInterface</span>;
     }</pre></div>
 <ol start="3">
-<li>代理类的第三个形参为需继承InvocationHandler的类，创建此类且利用构造方法注入。</li>
+<li>代理类的第三个形参为路标的作用！！给代理方法找路用的，就是要知道到底被哪个类使用了，继承InvocationHandler的类，创建此类且利用构造方法注入。</li>
 </ol>
 <div class="highlight highlight-source-java"><pre class="notranslate"><span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-smi">MapperProxy</span>&lt;<span class="pl-smi">T</span>&gt; <span class="pl-k">implements</span> <span class="pl-smi">InvocationHandler</span>, <span class="pl-smi">Serializable</span> {
 
